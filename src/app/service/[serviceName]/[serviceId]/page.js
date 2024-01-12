@@ -16,7 +16,7 @@ const Service =  ({ params }) => {
 //   let orderItem=[];
   
     useEffect(() => {
-console.log("kkkkkkkkkkkkkkkkk");
+// console.log("kkkkkkkkkkkkkkkkk");
         getServiceDetails();
     },[])
     const getServiceDetails = async () => {
@@ -104,6 +104,7 @@ console.log("kkkkkkkkkkkkkkkkk");
                       src={"/userImg.png"}
                       width={70}
                       height={70}
+                      alt={"userImg"}
                     ></Image>
                     <small>Best Available Professtional</small>
                   </div>
@@ -149,8 +150,8 @@ console.log("kkkkkkkkkkkkkkkkk");
                     <div className="serDet-desc">
                       <h3>{subSer.subService}</h3>
                       <ul key={subSer.id + 2} className="list-disc list-inside">
-                        {description.map((desc) => (
-                          <li>{desc}</li>
+                        {description.map((desc, index) => (
+                          <li key={index}>{desc}</li>
                         ))}
                       </ul>
                     </div>
@@ -181,10 +182,10 @@ console.log("kkkkkkkkkkkkkkkkk");
             <div className="order-card">
               <h2 className="order-card-header">Order Summary</h2>
               {/* <table> */}
-              {(orderItem || []).map((order) => {
+              {(orderItem || []).map((order, index) => {
                 console.log(order);
                 return (
-                  <div className="order-card-body">
+                  <div className="order-card-body" key={index}>
                     <div>
                       <p>{order.subService}</p>
                     </div>

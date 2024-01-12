@@ -8,9 +8,9 @@ const Review = ({review}) => {
     <div className="section2">
       <h2 className="section-header">Customer Reviews</h2>
       <div className="review-block">
-        {review.map( reviewItem => {
+        {review.map( ( reviewItem,index) => {
             return (
-              <div className="review-card">
+              <div className="review-card" key={index}>
                 <div className="card-header">
                   <Image
                     // fill={true}
