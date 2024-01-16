@@ -7,7 +7,7 @@
 //   let city="";
 //   let service = {};
 //   let res = await fetch(
-//     `http://localhost:4000/services/serviceDetails/${params.id}`
+//     `http://ec2-65-1-132-135.ap-south-1.compute.amazonaws.com:4000/services/serviceDetails/${params.id}`
 //   );
 //   let serviceDetails = await res.json();
 //   // if (typeof window !== "undefined") {

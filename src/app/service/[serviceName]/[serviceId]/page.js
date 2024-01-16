@@ -22,7 +22,7 @@ const Service =  ({ params }) => {
     const getServiceDetails = async () => {
         console.log("ksajdfkjahs")
         let res = await fetch(
-      `http://localhost:4000/services/serviceDetails/${params.serviceId}`
+      `http://ec2-65-1-132-135.ap-south-1.compute.amazonaws.com:4000/services/serviceDetails/${params.serviceId}`
     );
     //   console.log(res)
     let serviceDetailRes= await res.json();
@@ -77,7 +77,7 @@ const Service =  ({ params }) => {
             orderedItem: orderItem,
             address: ""
         }
-        let res = await fetch(`http://localhost:4000/order/addOrder`, {
+        let res = await fetch(`http://ec2-65-1-132-135.ap-south-1.compute.amazonaws.com:4000/order/addOrder`, {
           method: "post",
           body: JSON.stringify(details),
         });

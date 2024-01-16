@@ -3,7 +3,7 @@ import Location from "./location";
 
 
 const Header = async () => {
-  const res = await fetch("http://localhost:4000/city");
+  const res = await fetch("http://ec2-65-1-132-135.ap-south-1.compute.amazonaws.com:4000/city");
     let cityList = await res.json();
     return (
       <>

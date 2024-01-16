@@ -89,7 +89,7 @@ const selectCity = (selectedValue) => {
 },
 getServiceCategory = () => {
    let data = axios
-     .get("http://localhost:4000/services")
+     .get("http://ec2-65-1-132-135.ap-south-1.compute.amazonaws.com:4000/services")
      .then((res) => {
        console.log(res.data);
      })
@@ -98,7 +98,7 @@ getServiceCategory = () => {
      });
 },
 getCityData = () => {
-  let data = axios.get("http://localhost:4000/city")
+  let data = axios.get("http://ec2-65-1-132-135.ap-south-1.compute.amazonaws.com:4000/city")
   .then(res => {
     console.log(res.data)
     setCityList(res.data);
