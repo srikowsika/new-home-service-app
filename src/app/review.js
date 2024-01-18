@@ -14,6 +14,7 @@ const Review = ({review}) => {
                 <div className="card-header">
                   <Image
                     // fill={true}
+                    alt="user"
                     src={"/userImg.png"}
                     width={50}
                     height={50}

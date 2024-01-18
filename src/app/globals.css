@@ -188,7 +188,7 @@ margin: 120px 40px;
   .card-header{
     display: flex;
     flex-wrap: wrap;
-    align-items:start;
+    align-items:flex-start;
     gap: 5px;
   }
   .ser-desc{
@@ -277,7 +277,7 @@ margin: 120px 40px;
   padding: 20px 20px;
   margin: 20px 20px;
   position: fixed;
-  top: 150px;
+  top: 170px;
   right: 150px;
   /* bottom: 1px; */
   background-color: white;
@@ -362,4 +362,16 @@ margin: 120px 40px;
     /* text-align: center; */
     margin: 10px auto;
   }
+}
+.alert-block{
+  /* width: 300px; */
+  color: white;
+  display: flex;
+  justify-content: flex-end;
+}
+.success{
+    background-color: green;
+}
+.danger{
+  background-color: rgb(237, 66, 66);
 }

@@ -9,7 +9,8 @@ export default function Home() {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null),
     [selectedLocation, setLocation] = useState("Location"),
-    [cityList, setCityList] = useState([]);
+    [cityList, setCityList] = useState([]),
+    [services, setServiceDetailS] = useState([]);
     const router = useRouter();
  const reviewList = [
      {
@@ -30,88 +31,75 @@ export default function Home() {
        serviceName: "Painting",
      },
    ];
- const services = [
-   {
-     name: "Electrician",
-     routeSrc: "Electrician",
-     id: 1,
-     srcURL: "/electrician.png",
-     offDesc: "Flat 10% off",
-   },
-   { name: "Plumbing", routeSrc: "Plumbing", id: 20, srcURL: "/plumber.png" },
-   {
-     name: "AC Service & Repair",
-     routeSrc: "AC",
-     id: 3,
-     srcURL: "/ACService.png",
-     offDesc: "Flat 10% off",
-   },
-   { name: "Home Cleaning", routeSrc: "Cleaning", id: 4, srcURL: "/hcs.png" },
-   { name: "Home Renovation", id: 5, srcURL: "/bcs.png" },
-   {
-     name: "Tempo Service",
-     id: 9,
-     routeSrc: "temoService",
-     srcURL: "/moverService.png",
-     offDesc: "Starts @599",
-   },
-   { name: "Painting", routeSrc: "Painting", id: 6, srcURL: "/paintService.png" },
-   {
-     name: "Sofa Service",
-     routeSrc: "Sofa",
-     id: 7,
-     srcURL: "/sofa.jpg",
-     offDesc: "Upto 25% off",
-   },
-   {
-     name: "Packers & Movers",
-     routeSrc: "packers-movers",
-     id: 8,
-     srcURL: "/moverService.png",
-   },
-   {
-     name: "Carpentry",
-     routeSrc: "carpentry",
-     id: 10,
-     srcURL: "/carpentry.png",
-     offDesc: "Flat 20% off",
-   },
- ];
+//  const services = [
+//    {
+//      name: "Electrician",
+//      routeSrc: "Electrician",
+//      id: 1,
+//      srcURL: "/electrician.png",
+//      offDesc: "Flat 10% off",
+//    },
+//    { name: "Plumbing", routeSrc: "Plumbing", id: 20, srcURL: "/plumber.png" },
+//    {
+//      name: "AC Service & Repair",
+//      routeSrc: "AC",
+//      id: 3,
+//      srcURL: "/ACService.png",
+//      offDesc: "Flat 10% off",
+//    },
+//    { name: "Home Cleaning", routeSrc: "Cleaning", id: 4, srcURL: "/hcs.png" },
+//    { name: "Home Renovation", id: 5, srcURL: "/bcs.png" },
+//    {
+//      name: "Tempo Service",
+//      id: 9,
+//      routeSrc: "temoService",
+//      srcURL: "/moverService.png",
+//      offDesc: "Starts @599",
+//    },
+//    { name: "Painting", routeSrc: "Painting", id: 6, srcURL: "/paintService.png" },
+//    {
+//      name: "Sofa Service",
+//      routeSrc: "Sofa",
+//      id: 7,
+//      srcURL: "/sofa.jpg",
+//      offDesc: "Upto 25% off",
+//    },
+//    {
+//      name: "Packers & Movers",
+//      routeSrc: "packers-movers",
+//      id: 8,
+//      srcURL: "/moverService.png",
+//    },
+//    {
+//      name: "Carpentry",
+//      routeSrc: "carpentry",
+//      id: 10,
+//      srcURL: "/carpentry.png",
+//      offDesc: "Flat 20% off",
+//    },
+//  ];
  useEffect(() => {
-    // getCityData();
+    getServiceCategory();
  },[]);
  
 const selectCity = (selectedValue) => {
-  console.log(selectedValue);
+  // console.log(selectedValue);
   setOpen(false)
   setLocation(selectedValue.city)
    localStorage.setItem("city", selectedValue.city);
 },
-getServiceCategory = () => {
-   let data = axios
-     .get("http://ec2-65-1-132-135.ap-south-1.compute.amazonaws.com:4000/services")
-     .then((res) => {
-       console.log(res.data);
-     })
-     .catch((err) => {
-       console.log(err);
-     });
-},
-getCityData = () => {
-  let data = axios.get("http://ec2-65-1-132-135.ap-south-1.compute.amazonaws.com:4000/city")
-  .then(res => {
-    console.log(res.data)
-    setCityList(res.data);
-     if (typeof window !== "undefined") {
-       // Perform localStorage action
-      localStorage.setItem("cityList", JSON.stringify(res.data));
-     }
-    
-  })
-  .catch(err => {
-    console.log(err)
-  })
-}
+getServiceCategory = async () => {
+   let data = await fetch("http://ec2-65-1-132-135.ap-south-1.compute.amazonaws.com:4000/services")
+   let service = await data.json();
+   setServiceDetailS(service)
+    //  .then((res) => {
+    //    console.log(res.data);
+    //    setServiceDetailS(res.data)
+    //  })
+    //  .catch((err) => {
+    //    console.log(err);
+    //  });
+};
   return (
     <>
       {/* <Header

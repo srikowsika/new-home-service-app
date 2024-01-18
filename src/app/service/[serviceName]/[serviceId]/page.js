@@ -3,37 +3,23 @@ import React, { useEffect , useState} from "react";
 import AddOrder from "./AddOrder";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-// import "../../globals.css";
-// import axios from "axios";
+
 
 const Service =  ({ params }) => {
-  let city = "";
-  let service = {};
-  console.log(params);
   const router = useRouter();
-//   console.log(serviceDetails[0]);
-//   serviceDetails = serviceDetails.length > 0? serviceDetails[0] : [];
-//   let orderItem=[];
-  
+  const [alertDetail, setAlertDetail] = useState(null)
+
     useEffect(() => {
-// console.log("kkkkkkkkkkkkkkkkk");
         getServiceDetails();
     },[])
     const getServiceDetails = async () => {
-        console.log("ksajdfkjahs")
         let res = await fetch(
       `http://ec2-65-1-132-135.ap-south-1.compute.amazonaws.com:4000/services/serviceDetails/${params.serviceId}`
     );
-    //   console.log(res)
     let serviceDetailRes= await res.json();
-    console.log(serviceDetailRes);
     setServiceDetail(serviceDetailRes[0]);
     }
-  // if (typeof window !== "undefined") {
-  //   // Perform localStorage action
-  //   city = localStorage.getItem("city");
-  //    service = JSON.parse(localStorage.getItem("selectedService"));
-  // }
+  
     const today = new Date();
   const [orderItem, setORderItem] = useState([]);
   const [serviceDetails, setServiceDetail] = useState([]);
@@ -41,7 +27,6 @@ const Service =  ({ params }) => {
   const [confirmDate, setOrderDate] = useState(today);
 
   const orderSum = (orderItem) => {
-      console.log(orderItem);
       const initialValue = 0;
       const totalAmount = orderItem.reduce(
         (accumulator, currentValue) =>
@@ -52,46 +37,60 @@ const Service =  ({ params }) => {
     },
     handleAdd = (e, itemObj) => {
       e.preventDefault();
-      console.log(itemObj);
       let orderItemDup = [...orderItem];
       const found = orderItem.some((el) => el.id == itemObj.id);
-      console.log(found);
 
       if (!found) {
         orderItemDup.push(itemObj);
-        console.log(itemObj);
         setORderItem(orderItemDup);
       }
-      // else orderItem
     },
     handleOrderConfirmation = (e, orderItem) => {
-        console.log(orderItem)
         e.preventDefault();
         setOrderConfirmModal(true);
     },
     confirmOrder = async (e) => {
         e.preventDefault();
-        console.log(confirmDate);
         let details = {
             confirmDate: confirmDate,
             orderedItem: orderItem,
             address: ""
         }
-        let res = await fetch(`http://ec2-65-1-132-135.ap-south-1.compute.amazonaws.com:4000/order/addOrder`, {
+        let res = await fetch(`http://localhost:4000/order/addOrder`, {
           method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify(details),
         });
-        let orderList = res.json();
-        console.log(orderList)
-         router.push(`/`);
+        let orderList = await res.json();
+        if(orderList.success) {
+          setAlertDetail(orderList);
+          setTimeout(() => {
+            router.push(`/`);
+            setAlertDetail(null)
+          }, 3000);
+        } else {
+          setAlertDetail(orderList);
+        }
+         
     };
   return (
     <div>
       <h2>service</h2>
+      <div>
+    
+      </div>
+      
       <div className="service-layout">
-        <h2 className="service-header">
+      <div className="alert-block">
+      {alertDetail != null && <div className={`p-4 mb-4 text-sm rounded-lg ${!alertDetail.success ? "danger" : "success"}`} role="alert">
+  <span className="font-medium">{alertDetail.message}</span> 
+</div>}
+      </div>
+        {/* <h2 className="service-header">
           Best {params.serviceName} in {city}
-        </h2>
+        </h2> */}
         <div className="serviceCat-block">
           {orderConfirm ? (
             <div>
@@ -143,7 +142,6 @@ const Service =  ({ params }) => {
               </h3>
 
               {(serviceDetails.subServices || []).map((subSer) => {
-                console.log(subSer);
                 let description = subSer.description.split(";");
                 return (
                   <div className="detail-flex" key={subSer.id + 1}>
@@ -183,7 +181,6 @@ const Service =  ({ params }) => {
               <h2 className="order-card-header">Order Summary</h2>
               {/* <table> */}
               {(orderItem || []).map((order, index) => {
-                console.log(order);
                 return (
                   <div className="order-card-body" key={index}>
                     <div>
