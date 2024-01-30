@@ -3,18 +3,18 @@ import React, { useEffect , useState} from "react";
 import AddOrder from "./AddOrder";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-
+// import constantList from "./constant/config.json"
 
 const Service =  ({ params }) => {
   const router = useRouter();
   const [alertDetail, setAlertDetail] = useState(null)
-
+  const API_URL =  "https://home-service-app.click";
     useEffect(() => {
         getServiceDetails();
     },[])
     const getServiceDetails = async () => {
         let res = await fetch(
-      `http://ec2-65-1-132-135.ap-south-1.compute.amazonaws.com:4000/services/serviceDetails/${params.serviceId}`
+      `${API_URL}/services/serviceDetails/${params.serviceId}`
     );
     let serviceDetailRes= await res.json();
     setServiceDetail(serviceDetailRes[0]);
@@ -56,7 +56,7 @@ const Service =  ({ params }) => {
             orderedItem: orderItem,
             address: ""
         }
-        let res = await fetch(`http://localhost:4000/order/addOrder`, {
+        let res = await fetch(`${API_URL}/order/addOrder`, {
           method: "post",
           headers: {
             "Content-Type": "application/json",
